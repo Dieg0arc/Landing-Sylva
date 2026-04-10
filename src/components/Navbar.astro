@@ -1,11 +1,17 @@
 ---
-
 ---
 
-<nav id="navbar">
+<nav id="navbar" role="navigation" aria-label="Navegación principal">
   <div class="nav-inner">
-    <a href="#hero" class="nav-logo">🌿 Plantae</a>
-    <ul class="nav-links">
+    <a href="#hero" class="nav-logo" aria-label="Plantae — inicio">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+      </svg>
+      Plantae
+    </a>
+
+    <ul class="nav-links" id="nav-links" role="list">
       <li><a href="#growth">Ciclo</a></li>
       <li><a href="#ecosystems">Biomas</a></li>
       <li><a href="#photo">Fotosíntesis</a></li>
@@ -13,22 +19,48 @@
       <li><a href="#tips">Cultivo</a></li>
       <li><a href="#conservation" class="nav-link-accent">Conservación</a></li>
     </ul>
+
+    <button
+      class="nav-hamburger"
+      id="nav-hamburger"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
+
+<div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+  <ul role="list">
+    <li><a href="#growth">Ciclo de vida</a></li>
+    <li><a href="#ecosystems">Biomas</a></li>
+    <li><a href="#photo">Fotosíntesis</a></li>
+    <li><a href="#curiosidades">Curiosidades</a></li>
+    <li><a href="#tips">Cultivo</a></li>
+    <li><a href="#conservation" class="mobile-accent">Conservación</a></li>
+  </ul>
+</div>
 
 <style>
   #navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
     z-index: 100;
-    transform: translateY(-100%);
+    transform: translateY(calc(-100% - 2rem));
     transition:
       transform 0.4s var(--ease-out),
       background 0.3s;
-    background-color: transparent;
-    border-bottom: 1px solid rgba(126, 200, 160, 0.12);
+    background: rgba(13, 43, 26, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
   }
   #navbar.visible {
     transform: translateY(0);
@@ -37,7 +69,7 @@
   .nav-inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0.85rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -45,49 +77,150 @@
 
   .nav-logo {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--c-light);
     text-decoration: none;
     letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color var(--transition-base);
   }
+  .nav-logo:hover { color: var(--c-pale); }
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1.75rem;
     list-style: none;
+    align-items: center;
   }
   .nav-links a {
     color: var(--c-muted);
     text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
     transition: color var(--transition-base);
+    cursor: pointer;
+    padding: 0.25rem 0;
   }
-  .nav-links a:hover {
-    color: var(--c-light);
-  }
+  .nav-links a:hover { color: var(--c-light); }
 
   .nav-link-accent {
     color: var(--c-light) !important;
     border: 1px solid rgba(126, 200, 160, 0.3);
     border-radius: var(--radius-pill);
-    padding: 0.2rem 0.75rem;
+    padding: 0.25rem 0.85rem !important;
     transition:
       background var(--transition-base),
-      color var(--transition-base) !important;
+      color var(--transition-base) !important,
+      border-color var(--transition-base) !important;
   }
   .nav-link-accent:hover {
     background: var(--c-light);
     color: var(--c-deep) !important;
   }
 
-  @media (max-width: 600px) {
-    .nav-links {
-      display: none;
-    }
+  /* Hamburger */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-base);
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-hamburger:hover { background: rgba(126, 200, 160, 0.08); }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-light);
+    border-radius: 2px;
+    transition: transform 0.3s var(--ease-out), opacity 0.2s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile menu */
+  .nav-mobile {
+    position: fixed;
+    top: 5rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 99;
+    background: rgba(13, 43, 26, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.5rem;
+    transform: translateY(-1rem);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.35s var(--ease-out),
+      opacity 0.25s;
+  }
+  .nav-mobile.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-mobile ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .nav-mobile a {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    color: var(--c-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(126, 200, 160, 0.06);
+    transition: color var(--transition-base);
+    cursor: pointer;
+  }
+  .nav-mobile a:hover { color: var(--c-light); }
+  .nav-mobile li:last-child a { border-bottom: none; }
+  .mobile-accent { color: var(--c-light) !important; }
+
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
   }
 </style>
 
 <script>
   import "../scripts/navbar";
+
+  const btn = document.getElementById('nav-hamburger')!;
+  const menu = document.getElementById('nav-mobile')!;
+  const links = menu.querySelectorAll('a');
+
+  function closeMenu() {
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+  }
+
+  btn.addEventListener('click', () => {
+    const isOpen = btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+    menu.classList.toggle('open', isOpen);
+    menu.setAttribute('aria-hidden', String(!isOpen));
+  });
+
+  links.forEach(link => link.addEventListener('click', closeMenu));
 </script>

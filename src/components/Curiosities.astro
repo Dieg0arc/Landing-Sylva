@@ -1,5 +1,20 @@
 ---
 import { curiosities } from '../data/content';
+
+const curiosityIcons = [
+  // 📡 Radio waves / signal
+  `<svg class="curiosity-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>`,
+  // ⏳ Hourglass / timer
+  `<svg class="curiosity-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>`,
+  // 🌙 Moon
+  `<svg class="curiosity-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
+  // 🕸️ Network (Wood Wide Web)
+  `<svg class="curiosity-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v3"/><path d="M5.27 17.27 10 14"/><path d="M13.73 14l4.97 3.27"/><path d="M10 14h4"/></svg>`,
+  // 🌍 Globe
+  `<svg class="curiosity-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+  // 🎵 Music note
+  `<svg class="curiosity-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
+];
 ---
 
 <!-- wave from Stats (#2d7a4f) into this section (#0d2b1a) -->
@@ -14,7 +29,9 @@ import { curiosities } from '../data/content';
     <div class="curiosities-grid">
       {curiosities.map((c, i) => (
         <blockquote class="curiosity-card reveal" style={`--delay:${i * 0.08}s`}>
-          <div class="curiosity-emoji" aria-hidden="true">{c.emoji}</div>
+          <div class="curiosity-icon">
+            <Fragment set:html={curiosityIcons[i]} />
+          </div>
           <span class="open-quote" aria-hidden="true">"</span>
           <p>{c.quote}</p>
           <footer>— {c.source}</footer>
@@ -48,20 +65,35 @@ import { curiosities } from '../data/content';
     display: flex;
     flex-direction: column;
     gap: .6rem;
-    transition: transform var(--transition-base), border-color var(--transition-base);
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
   }
   .curiosity-card:hover {
     transform: translateY(-4px);
     border-color: rgba(126,200,160,.3);
+    box-shadow: 0 16px 32px rgba(0,0,0,.25);
   }
 
-  /* Taller cards for alternating visual rhythm */
+  /* Alternating visual rhythm */
   .curiosity-card:nth-child(3n+1) { padding-bottom: 2.4rem; }
   .curiosity-card:nth-child(3n+2) { padding-top: 2.4rem; }
 
-  .curiosity-emoji {
-    font-size: 1.5rem;
+  .curiosity-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: rgba(126, 200, 160, 0.08);
+    border: var(--border-subtle);
+    color: var(--c-light);
     margin-bottom: .2rem;
+    flex-shrink: 0;
+  }
+  .curiosity-svg-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
   }
 
   .open-quote {

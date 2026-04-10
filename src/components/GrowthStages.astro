@@ -1,5 +1,16 @@
 ---
 import { stages } from '../data/content';
+
+const stageIcons = [
+  // Germinación — sprout (Lucide Sprout)
+  `<svg class="stage-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-9"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>`,
+  // Brote — leaf (Lucide Leaf)
+  `<svg class="stage-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`,
+  // Crecimiento — trees (Lucide Trees)
+  `<svg class="stage-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 10v.2A3 3 0 0 1 8.9 16v0H5v0h0a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6"/><path d="M13 19v3"/><path d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/></svg>`,
+  // Floración — flower petals
+  `<svg class="stage-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="2"/><ellipse cx="12" cy="4.5" rx="2" ry="2.5"/><ellipse cx="12" cy="13.5" rx="2" ry="2.5"/><ellipse cx="7.5" cy="9" rx="2.5" ry="2"/><ellipse cx="16.5" cy="9" rx="2.5" ry="2"/><path d="M12 11v11"/></svg>`,
+];
 ---
 <section id="growth" class="section-growth">
   <div class="section-inner">
@@ -12,11 +23,13 @@ import { stages } from '../data/content';
     <div class="stages-grid">
       {stages.map((s, i) => (
         <div class="stage-card reveal" style={`--delay:${i * 0.1}s`}>
-          <div class="stage-number">{s.num}</div>
-          <div class="stage-icon">{s.icon}</div>
+          <div class="stage-number" aria-hidden="true">{s.num}</div>
+          <div class="stage-icon">
+            <Fragment set:html={stageIcons[i]} />
+          </div>
           <h3>{s.title}</h3>
           <p>{s.text}</p>
-          <div class="card-glow"></div>
+          <div class="card-glow" aria-hidden="true"></div>
         </div>
       ))}
     </div>
@@ -45,7 +58,7 @@ import { stages } from '../data/content';
     overflow: hidden;
     cursor: default;
     opacity: 0;
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
   }
   .stage-card::before {
     content: '';
@@ -57,7 +70,11 @@ import { stages } from '../data/content';
     opacity: 0;
     transition: opacity var(--transition-base);
   }
-  .stage-card:hover { transform: translateY(-8px); border-color: rgba(126,200,160,.45); box-shadow: 0 24px 48px rgba(0,0,0,.35), 0 0 0 1px rgba(126,200,160,.1); }
+  .stage-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(126,200,160,.45);
+    box-shadow: 0 24px 48px rgba(0,0,0,.35), 0 0 0 1px rgba(126,200,160,.1);
+  }
   .stage-card:hover::before { opacity: 1; }
 
   .card-glow {
@@ -66,6 +83,7 @@ import { stages } from '../data/content';
     background: radial-gradient(ellipse at 50% 0%, rgba(126,200,160,.12), transparent 70%);
     opacity: 0;
     transition: opacity var(--transition-base);
+    pointer-events: none;
   }
   .stage-card:hover .card-glow { opacity: 1; }
 
@@ -82,7 +100,18 @@ import { stages } from '../data/content';
     margin-bottom: 1rem;
     flex-shrink: 0;
   }
-  .stage-icon { font-size: 1.8rem; margin-bottom: .8rem; display: block; }
+
+  .stage-icon {
+    margin-bottom: .9rem;
+    display: block;
+    color: var(--c-light);
+  }
+  .stage-svg-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+
   .stage-card h3 {
     font-family: var(--font-serif);
     font-size: 1rem;

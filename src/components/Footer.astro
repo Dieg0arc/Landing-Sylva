@@ -1,7 +1,12 @@
 ---
 ---
 <footer class="site-footer">
-  <div class="footer-leaf" aria-hidden="true">🌿</div>
+  <div class="footer-leaf" aria-hidden="true">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+    </svg>
+  </div>
   <p>Hecho con amor por la naturaleza</p>
   <p class="footer-note">Cada scroll que diste ayudó a crecer algo aquí.</p>
 </footer>
@@ -15,7 +20,13 @@
     border-top: 1px solid rgba(126, 200, 160, .08);
     font-family: var(--font-sans);
   }
-  .footer-leaf { font-size: 2.8rem; margin-bottom: 1.2rem; display: block; }
+  .footer-leaf {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    color: var(--c-light);
+    opacity: 0.6;
+  }
   .site-footer p { font-size: .9rem; line-height: 1.9; }
-  .footer-note { font-size: .76rem; opacity: .45; margin-top: .3rem; }
+  .footer-note { font-size: var(--text-xs); opacity: .45; margin-top: .3rem; }
 </style>

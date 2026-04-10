@@ -9,9 +9,19 @@ const resize = () => { canvas.width = window.innerWidth; canvas.height = window.
 
 function blit(img: HTMLImageElement, alpha: number) {
   if (!img?.complete || !img.naturalWidth) return;
-  const s = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
   ctx.globalAlpha = alpha;
-  ctx.drawImage(img, (canvas.width - img.naturalWidth * s) / 2, (canvas.height - img.naturalHeight * s) / 2, img.naturalWidth * s, img.naturalHeight * s);
+
+  if (canvas.width <= 767) {
+    const s = canvas.width / img.naturalWidth;
+    const w = img.naturalWidth * s;
+    const h = img.naturalHeight * s;
+    ctx.drawImage(img, 0, canvas.height * 0.04, w, h);
+  } else {
+    const s = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+    const w = img.naturalWidth * s;
+    const h = img.naturalHeight * s;
+    ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+  }
 }
 
 function tick() {
@@ -28,6 +38,7 @@ function onScroll() {
   const sc = document.getElementById('scroll-container')!;
   target = Math.min(Math.max(window.scrollY / (sc.offsetHeight - window.innerHeight), 0), 1) * (TOTAL_FRAMES - 1);
 }
+
 
 resize();
 window.addEventListener('scroll', onScroll, { passive: true });
