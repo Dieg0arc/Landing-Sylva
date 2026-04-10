@@ -1,0 +1,127 @@
+---
+---
+<section id="photo" class="section-photo">
+  <div class="photo-orbs" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+  <div class="section-inner photo-inner">
+    <div class="photo-visual">
+      <div class="leaf-diagram">
+        <svg viewBox="0 0 200 200" class="leaf-svg" aria-hidden="true">
+          <ellipse cx="100" cy="105" rx="68" ry="88" fill="#2d7a4f" opacity=".92" transform="rotate(-15 100 105)"/>
+          <ellipse cx="100" cy="105" rx="68" ry="88" fill="none" stroke="#7ec8a0" stroke-width="1" opacity=".3" transform="rotate(-15 100 105)"/>
+          <line x1="100" y1="28" x2="100" y2="172" stroke="#7ec8a0" stroke-width="2"/>
+          <line x1="100" y1="68"  x2="62"  y2="92"  stroke="#7ec8a0" stroke-width="1.2"/>
+          <line x1="100" y1="90"  x2="138" y2="114" stroke="#7ec8a0" stroke-width="1.2"/>
+          <line x1="100" y1="112" x2="65"  y2="132" stroke="#7ec8a0" stroke-width="1.2"/>
+          <line x1="100" y1="132" x2="132" y2="150" stroke="#7ec8a0" stroke-width="1.2"/>
+        </svg>
+        <span class="photo-tag tag-sun">☀️ Luz solar</span>
+        <span class="photo-tag tag-co2">CO₂</span>
+        <span class="photo-tag tag-o2">O₂</span>
+        <span class="photo-tag tag-h2o">💧 H₂O</span>
+      </div>
+    </div>
+    <div class="photo-text">
+      <p class="section-label">Fotosíntesis</p>
+      <h2 class="section-title">La fábrica de energía más antigua</h2>
+      <p class="body-text">
+        Las plantas transforman luz, agua y CO₂ en glucosa y oxígeno.
+        Este proceso, presente en la Tierra hace más de 3.000 millones
+        de años, es la base de casi toda la vida en nuestro planeta.
+      </p>
+      <div class="formula-box">
+        <span>6CO₂ + 6H₂O + luz</span>
+        <span class="arrow">→</span>
+        <span>C₆H₁₂O₆ + 6O₂</span>
+      </div>
+      <p class="body-text small-note">
+        Una sola hoja puede producir suficiente oxígeno para que una
+        persona respire durante varios minutos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="wave-sep" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,20 C480,80 960,0 1440,50 L1440,80 L0,80Z" fill="#2d7a4f"/></svg>
+</div>
+
+<style>
+  .section-photo { background: var(--c-deep); color: var(--c-text); position: relative; overflow: hidden; }
+
+  .photo-orbs { position: absolute; inset: 0; pointer-events: none; }
+  .orb { position: absolute; border-radius: 50%; animation: orb-pulse 7s ease-in-out infinite alternate; }
+  .o1 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(45,122,79,.15), transparent 70%); top: -200px; right: -100px; animation-delay: 0s; }
+  .o2 { width: 380px; height: 380px; background: radial-gradient(circle, rgba(126,200,160,.08), transparent 70%); bottom: -120px; left: -80px; animation-delay: -3s; }
+  .o3 { width: 220px; height: 220px; background: radial-gradient(circle, rgba(201,168,76,.06), transparent 70%); top: 40%; left: 45%; animation-delay: -5s; }
+  @keyframes orb-pulse {
+    from { transform: scale(1);    opacity: .7; }
+    to   { transform: scale(1.18); opacity: 1; }
+  }
+
+  .photo-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 768px) { .photo-inner { grid-template-columns: 1fr; gap: 3rem; } }
+
+  .photo-visual { display: flex; justify-content: center; }
+
+  .leaf-diagram { position: relative; width: 260px; height: 260px; }
+
+  .leaf-svg {
+    width: 100%; height: 100%;
+    animation: breathe 4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 32px rgba(45,122,79,.55));
+  }
+  @keyframes breathe {
+    from { transform: scale(1) rotate(-3deg); }
+    to   { transform: scale(1.07) rotate(3deg); }
+  }
+
+  .photo-tag {
+    position: absolute;
+    font-size: .72rem;
+    color: var(--c-light);
+    background: rgba(13,43,26,.85);
+    border: 1px solid rgba(126,200,160,.28);
+    border-radius: 20px;
+    padding: .28rem .75rem;
+    white-space: nowrap;
+    animation: tag-float 3.2s ease-in-out infinite alternate;
+  }
+  .tag-sun { top: 0;      left: -28px;  animation-delay: 0s; }
+  .tag-co2 { top: 28%;   right: -36px; animation-delay: -.9s; }
+  .tag-o2  { bottom: 28%; right: -28px; animation-delay: -1.7s; }
+  .tag-h2o { bottom: 2%;  left: -12px;  animation-delay: -2.5s; }
+  @keyframes tag-float {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-10px); }
+  }
+
+  .body-text { font-size: .98rem; color: var(--c-muted); line-height: 1.8; margin-bottom: 1.5rem; }
+
+  .formula-box {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+    background: rgba(45,122,79,.14);
+    border: 1px solid rgba(126,200,160,.18);
+    border-radius: 12px;
+    padding: 1rem 1.4rem;
+    font-size: .85rem;
+    font-family: 'Courier New', monospace;
+    color: var(--c-pale);
+    margin-bottom: 1.2rem;
+  }
+  .formula-box .arrow { color: var(--c-gold); font-size: 1.2rem; }
+  .small-note { font-size: .82rem !important; opacity: .65; }
+</style>

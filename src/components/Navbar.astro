@@ -1,0 +1,93 @@
+---
+
+---
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">🌿 Plantae</a>
+    <ul class="nav-links">
+      <li><a href="#growth">Ciclo</a></li>
+      <li><a href="#ecosystems">Biomas</a></li>
+      <li><a href="#photo">Fotosíntesis</a></li>
+      <li><a href="#curiosidades">Curiosidades</a></li>
+      <li><a href="#tips">Cultivo</a></li>
+      <li><a href="#conservation" class="nav-link-accent">Conservación</a></li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  #navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transform: translateY(-100%);
+    transition:
+      transform 0.4s var(--ease-out),
+      background 0.3s;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(126, 200, 160, 0.12);
+  }
+  #navbar.visible {
+    transform: translateY(0);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--c-light);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--c-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    transition: color var(--transition-base);
+  }
+  .nav-links a:hover {
+    color: var(--c-light);
+  }
+
+  .nav-link-accent {
+    color: var(--c-light) !important;
+    border: 1px solid rgba(126, 200, 160, 0.3);
+    border-radius: var(--radius-pill);
+    padding: 0.2rem 0.75rem;
+    transition:
+      background var(--transition-base),
+      color var(--transition-base) !important;
+  }
+  .nav-link-accent:hover {
+    background: var(--c-light);
+    color: var(--c-deep) !important;
+  }
+
+  @media (max-width: 600px) {
+    .nav-links {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import "../scripts/navbar";
+</script>

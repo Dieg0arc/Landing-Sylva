@@ -1,0 +1,85 @@
+---
+import { processSteps } from '../data/content';
+---
+<section id="process" class="section-process">
+  <div class="section-inner">
+    <p class="section-label">Proceso</p>
+    <h2 class="section-title">¿Cómo funciona el crecimiento?</h2>
+    <div class="process-steps">
+      {processSteps.map((step, i) => (
+        <div class="process-step reveal" style={`--delay:${i * 0.12}s`}>
+          <div class="step-number">{step.n}</div>
+          <div class="step-line"></div>
+          <div class="step-body">
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<div class="wave-sep wave-flip" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,60 C360,0 1080,80 1440,20 L1440,0 L0,0Z" fill="#0d2b1a"/></svg>
+</div>
+
+<style>
+  .section-process { background: var(--c-deep); color: var(--c-text); }
+
+  .process-steps { display: flex; flex-direction: column; }
+
+  .process-step {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    padding-bottom: 3rem;
+    align-items: flex-start;
+  }
+  .process-step:last-child { padding-bottom: 0; }
+
+  .step-number {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--c-light);
+    background: rgba(126,200,160,.1);
+    border: 1px solid rgba(126,200,160,.25);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: .1rem;
+    transition: background var(--transition-base), border-color var(--transition-base);
+  }
+  .process-step:hover .step-number {
+    background: rgba(126,200,160,.22);
+    border-color: var(--c-light);
+  }
+
+  .step-line { display: none; }
+
+  .step-body {
+    flex: 1;
+    min-width: 0;
+    padding-top: .3rem;
+  }
+  .step-body h3 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+    color: var(--c-pale);
+    white-space: normal;
+  }
+  .step-body p {
+    font-size: .9rem;
+    color: var(--c-muted);
+    line-height: 1.75;
+    max-width: 560px;
+    white-space: normal;
+  }
+</style>

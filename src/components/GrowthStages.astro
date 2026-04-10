@@ -1,0 +1,109 @@
+---
+import { stages } from '../data/content';
+---
+<section id="growth" class="section-growth">
+  <div class="section-inner">
+    <p class="section-label">Ciclo de vida</p>
+    <h2 class="section-title">Las etapas del crecimiento</h2>
+    <p class="section-subtitle">
+      Cada planta pasa por un viaje extraordinario desde su origen
+      hasta su plenitud.
+    </p>
+    <div class="stages-grid">
+      {stages.map((s, i) => (
+        <div class="stage-card reveal" style={`--delay:${i * 0.1}s`}>
+          <div class="stage-number">{s.num}</div>
+          <div class="stage-icon">{s.icon}</div>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+          <div class="card-glow"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<div class="wave-sep" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 C480,80 960,0 1440,60 L1440,80 L0,80Z" fill="#0d2b1a"/></svg>
+</div>
+
+<style>
+  .section-growth { background: var(--c-dark); color: var(--c-text); }
+
+  .stages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stage-card {
+    position: relative;
+    background: rgba(255,255,255,.04);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--card-pad-md);
+    overflow: hidden;
+    cursor: default;
+    opacity: 0;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+  .stage-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--c-mid), var(--c-light));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+  .stage-card:hover { transform: translateY(-8px); border-color: rgba(126,200,160,.45); box-shadow: 0 24px 48px rgba(0,0,0,.35), 0 0 0 1px rgba(126,200,160,.1); }
+  .stage-card:hover::before { opacity: 1; }
+
+  .card-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(126,200,160,.12), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+  .stage-card:hover .card-glow { opacity: 1; }
+
+  .stage-number {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: var(--border-medium);
+    color: var(--c-light);
+    font-size: .75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+  .stage-icon { font-size: 1.8rem; margin-bottom: .8rem; display: block; }
+  .stage-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    margin-bottom: .6rem;
+    color: var(--c-pale);
+  }
+  .stage-card p { font-size: var(--text-sm); color: var(--c-muted); line-height: var(--lh-loose); }
+</style>
+
+<script>
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll<HTMLElement>('.stage-card').forEach((card, i) => {
+    inView(card, () => {
+      animate(
+        card,
+        { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+        { duration: 0.5, delay: i * 0.1, easing: [0.16, 1, 0.3, 1] }
+      );
+    }, { margin: '-10% 0px' });
+  });
+</script>

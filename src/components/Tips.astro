@@ -1,0 +1,102 @@
+---
+import { tips } from '../data/content';
+---
+<section id="tips" class="section-tips">
+  <div class="section-inner">
+    <p class="section-label">Cultivo</p>
+    <h2 class="section-title">Claves para que crezcan</h2>
+    <div class="tips-list">
+      {tips.map(t => (
+        <div class="tip-row reveal">
+          <div class="tip-icon">
+            {t.icon}
+            <p class="tip-pct">{t.w}</p>
+          </div>
+          <div class="tip-body">
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+            <div class="tip-bar"><div class="tip-fill" style={`--w:${t.w}`}></div></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-tips { background: var(--c-dark); color: var(--c-text); }
+
+  .tips-list { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 3rem; }
+
+  .tip-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: start;
+    gap: 1.5rem;
+    background: rgba(255,255,255,.035);
+    border: var(--border-subtle);
+    border-left: var(--border-accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 1.6rem 1.8rem;
+    transition: background var(--transition-base), border-color var(--transition-base), border-left-width var(--transition-base);
+  }
+  .tip-row:hover {
+    background: rgba(255,255,255,.055);
+    border-left-width: 3px;
+    border-color: rgba(126,200,160,.28);
+  }
+  @media (max-width: 640px) {
+    .tip-row { grid-template-columns: 48px 1fr; }
+  }
+
+  .tip-icon {
+    font-size: 1.4rem;
+    text-align: center;
+    padding-top: .15rem;
+  }
+  .tip-pct {
+    font-size: var(--text-xs);
+    color: var(--c-muted);
+    text-align: center;
+    margin-top: .3rem;
+    opacity: .7;
+  }
+
+  .tip-body h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .35rem;
+    color: var(--c-pale);
+  }
+  .tip-body p { font-size: var(--text-sm); color: var(--c-muted); line-height: var(--lh-base); }
+
+  .tip-bar {
+    height: 3px;
+    background: rgba(255,255,255,.07);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-top: .6rem;
+  }
+  .tip-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(to right, var(--c-mid), var(--c-light));
+    border-radius: var(--radius-pill);
+  }
+</style>
+
+<script>
+  import { inView, animate } from 'motion';
+
+  inView('.tip-row', (element) => {
+    const fill = element.querySelector<HTMLElement>('.tip-fill');
+    if (!fill) return;
+    const target = fill.style.getPropertyValue('--w') || '0%';
+    animate(fill, { width: ['0%', target] }, {
+      duration: 1,
+      delay: 0.15,
+      easing: [0.16, 1, 0.3, 1],
+    });
+  }, { margin: '-5% 0px' });
+</script>

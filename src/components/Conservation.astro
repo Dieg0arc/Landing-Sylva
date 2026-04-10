@@ -1,0 +1,188 @@
+---
+import { endangeredStats } from '../data/content';
+---
+
+<!-- wave from Tips (#1a4a2e) into conservation (#060f09) -->
+<div class="wave-sep" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,60 C360,80 1080,20 1440,50 L1440,80 L0,80Z" fill="#060f09"/></svg>
+</div>
+
+<section id="conservation" class="section-conservation">
+  <div class="cons-orb" aria-hidden="true"></div>
+  <div class="section-inner">
+
+    <div class="cons-header reveal">
+      <p class="section-label">Conservación</p>
+      <h2 class="section-title">El reino en peligro</h2>
+      <p class="cons-intro">
+        Cada día desaparecen especies que tardaron millones de años en
+        evolucionar. Lo que perdemos no es solo diversidad botánica —
+        perdemos los cimientos invisibles de los ecosistemas que nos sostienen.
+      </p>
+    </div>
+
+    <div class="endangered-grid">
+      {endangeredStats.map((s, i) => (
+        <div class="endangered-item reveal" style={`--delay:${i * 0.12}s`}>
+          <div class="endangered-number">{s.number}</div>
+          <p class="endangered-label">{s.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="cons-body reveal">
+      <p>
+        La pérdida de una planta no es un dato aislado. Es la extinción
+        simultánea de los insectos que la polinizaban, los hongos que la
+        alimentaban y las aves que dispersaban sus semillas. La naturaleza
+        no conoce las extinciones en singular.
+      </p>
+      <p>
+        La buena noticia: cada persona que cultiva, que cuida, que aprende
+        a respetar el ciclo vegetal contribuye activamente a la preservación.
+        No necesitas un laboratorio para proteger la vida.
+      </p>
+      <a href="#tips" class="cons-cta">
+        Aprende a cultivar
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- wave into Footer (#0d2b1a) -->
+<div class="wave-sep" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,30 C480,80 960,0 1440,60 L1440,80 L0,80Z" fill="#0d2b1a"/></svg>
+</div>
+
+<style>
+  .section-conservation {
+    background: #060f09;
+    color: var(--c-text);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cons-orb {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,122,79,.12), transparent 70%);
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .section-conservation .section-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cons-header { max-width: 680px; }
+
+  .cons-intro {
+    font-size: var(--text-lg);
+    color: var(--c-muted);
+    line-height: var(--lh-loose);
+    margin-top: 1rem;
+  }
+
+  .endangered-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(126,200,160,.08);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .endangered-grid { grid-template-columns: 1fr; }
+  }
+
+  .endangered-item {
+    background: #060f09;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: background var(--transition-base);
+  }
+  .endangered-item:hover { background: rgba(126,200,160,.04); }
+
+  .endangered-number {
+    font-family: var(--font-serif);
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: .7rem;
+    background: linear-gradient(135deg, var(--c-cream), rgba(126,200,160,.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .endangered-label {
+    font-size: var(--text-sm);
+    color: var(--c-muted);
+    line-height: var(--lh-base);
+    max-width: 180px;
+    margin: 0 auto;
+  }
+
+  .cons-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 4rem;
+    align-items: end;
+  }
+
+  @media (max-width: 768px) {
+    .cons-body { grid-template-columns: 1fr; }
+  }
+
+  .cons-body p {
+    font-size: var(--text-base);
+    color: var(--c-muted);
+    line-height: var(--lh-loose);
+  }
+
+  .cons-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .85rem 1.8rem;
+    border: var(--border-medium);
+    border-radius: var(--radius-pill);
+    color: var(--c-light);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    letter-spacing: .05em;
+    transition: background var(--transition-base), color var(--transition-base);
+    width: fit-content;
+    margin-top: 1.5rem;
+  }
+  .cons-cta svg { width: 16px; height: 16px; transition: transform var(--transition-base); }
+  .cons-cta:hover { background: var(--c-light); color: var(--c-deep); }
+  .cons-cta:hover svg { transform: translateX(4px); }
+</style>
+
+<script>
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll<HTMLElement>('.endangered-item').forEach((el, i) => {
+    inView(el, () => {
+      animate(
+        el,
+        { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+        { duration: 0.6, delay: i * 0.12, easing: [0.16, 1, 0.3, 1] }
+      );
+    }, { margin: '-10% 0px' });
+  });
+</script>

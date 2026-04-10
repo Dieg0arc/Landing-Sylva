@@ -1,0 +1,207 @@
+---
+---
+<section id="product" class="product-section">
+  <div class="product-scroll-container">
+    <div class="product-sticky">
+
+      <canvas id="product-canvas"></canvas>
+
+      <div class="product-text text-right" id="text-right-1">
+        <p class="section-label">Material</p>
+        <h2 class="section-title">Plant-based<br>al 100%</h2>
+        <p class="product-desc">Fabricada con almidón de maíz y PBAT. Se degrada completamente en condiciones de compostaje en menos de 180 días.</p>
+        <p class="product-feature">✓ Sin plástico convencional</p>
+      </div>
+
+      <div class="product-text text-left" id="text-left">
+        <p class="section-label">Certificación</p>
+        <h2 class="section-title">BPI<br>Compostable</h2>
+        <p class="product-desc">Cumple con los estándares ASTM D6400. Certificada para compostaje industrial y doméstico en todos los estados de EE.UU.</p>
+        <p class="product-feature">✓ Apta para residuos orgánicos</p>
+      </div>
+
+      <div class="product-text text-center" id="text-center">
+        <p class="section-label">NaturePoly</p>
+        <h2 class="section-title">Compostable.<br>Responsable.</h2>
+        <p class="product-desc">La bolsa que cierra el ciclo.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-section { background: #000; }
+
+  .product-scroll-container {
+    height: 5500px;
+    position: relative;
+  }
+
+  .product-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: transparent;
+  }
+
+  #product-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-text {
+    position: absolute;
+    z-index: 2;
+    max-width: 340px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    color: var(--c-text);
+    pointer-events: none;
+  }
+
+  .product-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .text-right { right: 6vw; text-align: left; }
+  .text-left  { left: 6vw;  text-align: left; }
+
+  .text-center {
+    position: absolute;
+    bottom: 2vh;
+    left: 50%;
+    transform: translateX(-50%) translateY(16px);
+    text-align: center;
+    max-width: 400px;
+    color: var(--c-light);
+  }
+  .text-center.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .product-desc {
+    font-size: var(--text-sm);
+    color: var(--c-muted);
+    line-height: var(--lh-loose);
+    margin-bottom: 1.2rem;
+    margin-top: .8rem;
+  }
+
+  .product-feature {
+    font-size: var(--text-xs);
+    color: var(--c-light);
+    letter-spacing: .04em;
+  }
+</style>
+
+<script>
+  const TOTAL = 173;
+  const canvas = document.getElementById('product-canvas') as HTMLCanvasElement;
+  const ctx    = canvas.getContext('2d')!;
+  const frames: HTMLImageElement[] = [];
+
+  const textRight1  = document.getElementById('text-right-1')!;
+  const textLeft    = document.getElementById('text-left')!;
+  const textCenter  = document.getElementById('text-center')!;
+
+  const P1_END = 0.25;
+  const P2_END = 0.50;
+  const P3_END = 0.75;
+  const P4_END = 1.00;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function frameUrl(i: number) {
+    return `/3d/frame_${String(i + 1).padStart(3, '0')}.jpg`;
+  }
+
+  function easeInOut(t: number) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+
+  function phaseProgress(progress: number, start: number, end: number) {
+    return Math.min(Math.max((progress - start) / (end - start), 0), 1);
+  }
+
+  function setVisible(el: HTMLElement, show: boolean) {
+    if (show) el.classList.add('visible');
+    else      el.classList.remove('visible');
+  }
+
+  function draw(img: HTMLImageElement, progress: number) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const size = canvas.height * 0.58;
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const w = size * imgRatio;
+    const h = size;
+    const y = (canvas.height - h) / 2;
+
+    const xCenter = canvas.width * 0.50 - w / 2;
+    const xLeft   = canvas.width * 0.28 - w / 2;
+    const xRight  = canvas.width * 0.72 - w / 2;
+
+    let x: number;
+
+    if (progress <= P1_END) {
+      const p = easeInOut(phaseProgress(progress, 0, P1_END));
+      x = xCenter + (xLeft - xCenter) * p;
+    } else if (progress <= P2_END) {
+      const p = easeInOut(phaseProgress(progress, P1_END, P2_END));
+      x = xLeft + (xRight - xLeft) * p;
+    } else if (progress <= P3_END) {
+      const p = easeInOut(phaseProgress(progress, P2_END, P3_END));
+      x = xRight + (xCenter - xRight) * p;
+    } else {
+      x = xCenter;
+    }
+
+    ctx.drawImage(img, x, y, w, h);
+
+    const p1 = phaseProgress(progress, 0,      P1_END);
+    const p2 = phaseProgress(progress, P1_END, P2_END);
+    const p4 = phaseProgress(progress, P3_END, P4_END);
+
+    setVisible(textRight1, p1 > 0.2 && p1 < 0.85);
+    setVisible(textLeft,   p2 > 0.2 && p2 < 0.85);
+    setVisible(textCenter, p4 > 0.3);
+  }
+
+  function onScroll() {
+    const section = document.querySelector('.product-scroll-container')!;
+    const scrolled = -section.getBoundingClientRect().top;
+    const total    = (section as HTMLElement).offsetHeight - window.innerHeight;
+    const progress = Math.min(Math.max(scrolled / total, 0), 1);
+
+    const idx = Math.min(Math.floor(progress * TOTAL), TOTAL - 1);
+    if (frames[idx]?.complete) draw(frames[idx], progress);
+  }
+
+  resize();
+  window.addEventListener('resize', () => { resize(); onScroll(); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const first = new Image();
+  first.src = frameUrl(0);
+  first.onload = () => draw(first, 0);
+  frames.push(first);
+
+  for (let i = 1; i < TOTAL; i++) {
+    const img = new Image();
+    img.src = frameUrl(i);
+    frames.push(img);
+  }
+</script>

@@ -1,0 +1,87 @@
+---
+import { stats } from '../data/content';
+---
+<section class="section-stats">
+  <div class="section-inner">
+    <div class="stats-grid">
+      {stats.map(s => (
+        <div class="stat-item reveal">
+          <div class="stat-top">
+            <span class="stat-number" data-target={s.target}>0</span>
+            <span class="stat-suffix">{s.suffix}</span>
+          </div>
+          <div class="stat-divider"></div>
+          <p class="stat-label">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<div class="wave-sep wave-flip" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 1080,80 1440,30 L1440,0 L0,0Z" fill="#2d7a4f"/></svg>
+</div>
+
+<style>
+  .section-stats { background: var(--c-mid); color: var(--c-text); }
+  .section-stats .section-inner { padding: 5rem 2rem; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .stat-item {
+    padding: var(--card-pad-sm);
+    text-align: left;
+    border: var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,.03);
+    min-width: 0;
+    overflow: hidden;
+    transition: background var(--transition-base), border-color var(--transition-base);
+  }
+  .stat-item:hover { background: rgba(255,255,255,.07); border-color: rgba(126,200,160,.3); }
+
+  @media (max-width: 768px) {
+    .stat-item { border-radius: var(--radius-md); }
+  }
+
+  .stat-top { display: flex; align-items: flex-end; gap: .3rem; margin-bottom: .8rem; }
+
+  .stat-number {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1;
+    display: block;
+    background: linear-gradient(135deg, var(--c-cream), var(--c-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-suffix {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--c-light);
+    -webkit-text-fill-color: var(--c-light);
+    margin-bottom: .4rem;
+  }
+
+  .stat-divider {
+    width: 32px;
+    height: 2px;
+    background: linear-gradient(to right, var(--c-mid), var(--c-light));
+    border-radius: 2px;
+    margin-bottom: .8rem;
+    transition: width var(--transition-base);
+  }
+  .stat-item:hover .stat-divider { width: 56px; }
+
+  .stat-label { font-size: var(--text-sm); color: rgba(200,230,212,.65); line-height: 1.55; max-width: 180px; }
+</style>
+
+<script>
+  import '../scripts/statsCounter';
+</script>

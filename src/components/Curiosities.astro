@@ -1,0 +1,105 @@
+---
+import { curiosities } from '../data/content';
+---
+
+<!-- wave from Stats (#2d7a4f) into this section (#0d2b1a) -->
+<div class="wave-sep wave-flip" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,50 C480,0 960,80 1440,20 L1440,0 L0,0Z" fill="#2d7a4f"/></svg>
+</div>
+
+<section id="curiosidades" class="section-curiosities">
+  <div class="section-inner">
+    <p class="section-label">¿Sabías que…?</p>
+    <h2 class="section-title">El mundo vegetal te sorprenderá</h2>
+    <div class="curiosities-grid">
+      {curiosities.map((c, i) => (
+        <blockquote class="curiosity-card reveal" style={`--delay:${i * 0.08}s`}>
+          <div class="curiosity-emoji" aria-hidden="true">{c.emoji}</div>
+          <span class="open-quote" aria-hidden="true">"</span>
+          <p>{c.quote}</p>
+          <footer>— {c.source}</footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- wave into Tips (#1a4a2e) -->
+<div class="wave-sep" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,50 C360,0 1080,80 1440,30 L1440,80 L0,80Z" fill="#1a4a2e"/></svg>
+</div>
+
+<style>
+  .section-curiosities { background: var(--c-deep); color: var(--c-text); }
+  .section-curiosities .section-inner { padding-top: 5rem; padding-bottom: 5rem; }
+
+  .curiosities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .curiosity-card {
+    position: relative;
+    background: rgba(255,255,255,.04);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.8rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    transition: transform var(--transition-base), border-color var(--transition-base);
+  }
+  .curiosity-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(126,200,160,.3);
+  }
+
+  /* Taller cards for alternating visual rhythm */
+  .curiosity-card:nth-child(3n+1) { padding-bottom: 2.4rem; }
+  .curiosity-card:nth-child(3n+2) { padding-top: 2.4rem; }
+
+  .curiosity-emoji {
+    font-size: 1.5rem;
+    margin-bottom: .2rem;
+  }
+
+  .open-quote {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    line-height: .6;
+    color: var(--c-mid);
+    user-select: none;
+    display: block;
+  }
+
+  .curiosity-card p {
+    font-size: var(--text-base);
+    color: var(--c-text);
+    line-height: var(--lh-base);
+    flex: 1;
+  }
+
+  .curiosity-card footer {
+    font-size: var(--text-xs);
+    color: var(--c-muted);
+    letter-spacing: .05em;
+    margin-top: .4rem;
+    padding-top: .8rem;
+    border-top: 1px solid rgba(126,200,160,.1);
+  }
+</style>
+
+<script>
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll<HTMLElement>('.curiosity-card').forEach((card, i) => {
+    inView(card, () => {
+      animate(
+        card,
+        { opacity: [0, 1], transform: ['translateY(16px)', 'translateY(0)'] },
+        { duration: 0.5, delay: i * 0.08, easing: [0.16, 1, 0.3, 1] }
+      );
+    }, { margin: '-8% 0px' });
+  });
+</script>

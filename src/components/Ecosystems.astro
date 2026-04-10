@@ -1,0 +1,139 @@
+---
+import { ecosystems } from '../data/content';
+---
+<section id="ecosystems" class="section-ecosystems">
+  <div class="section-inner">
+    <p class="section-label">Biomas</p>
+    <h2 class="section-title">Los grandes reinos vegetales</h2>
+    <p class="section-subtitle">
+      Cada bioma es un mundo propio donde las plantas encontraron
+      formas extraordinarias de prosperar contra todo pronóstico.
+    </p>
+    <div class="eco-grid">
+      {ecosystems.map((e, i) => (
+        <div class="eco-card reveal" style={`--delay:${i * 0.1}s`}>
+          <div class="eco-header">
+            <span class="eco-icon" aria-hidden="true">{e.icon}</span>
+            <div class="eco-stat-block">
+              <span class="eco-stat">{e.stat}</span>
+              <span class="eco-stat-label">{e.statLabel}</span>
+            </div>
+          </div>
+          <div class="eco-divider" aria-hidden="true"></div>
+          <h3>{e.name}</h3>
+          <p>{e.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-ecosystems { background: var(--c-deep); color: var(--c-text); }
+
+  .eco-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .eco-card {
+    background: rgba(255,255,255,.04);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--card-pad-md);
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+  .eco-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 0% 0%, rgba(126,200,160,.09), transparent 65%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+  }
+  .eco-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(126,200,160,.35);
+    box-shadow: 0 20px 40px rgba(0,0,0,.3);
+  }
+  .eco-card:hover::after { opacity: 1; }
+
+  .eco-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .eco-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .eco-stat-block {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .eco-stat {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--c-cream), var(--c-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .eco-stat-label {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--c-muted);
+    line-height: 1.4;
+    max-width: 130px;
+    margin-top: .2rem;
+  }
+
+  .eco-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(126,200,160,.25), transparent);
+    margin-bottom: 1.2rem;
+  }
+
+  .eco-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: var(--c-pale);
+    margin-bottom: .55rem;
+  }
+
+  .eco-card p {
+    font-size: var(--text-sm);
+    color: var(--c-muted);
+    line-height: var(--lh-loose);
+  }
+</style>
+
+<script>
+  import { inView, animate } from 'motion';
+
+  document.querySelectorAll<HTMLElement>('.eco-card').forEach((card, i) => {
+    inView(card, () => {
+      animate(
+        card,
+        { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+        { duration: 0.55, delay: i * 0.1, easing: [0.16, 1, 0.3, 1] }
+      );
+    }, { margin: '-10% 0px' });
+  });
+</script>
