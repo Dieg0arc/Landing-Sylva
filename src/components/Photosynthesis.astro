@@ -18,10 +18,16 @@
           <line x1="100" y1="112" x2="65"  y2="132" stroke="#7ec8a0" stroke-width="1.2"/>
           <line x1="100" y1="132" x2="132" y2="150" stroke="#7ec8a0" stroke-width="1.2"/>
         </svg>
-        <span class="photo-tag tag-sun">☀️ Luz solar</span>
+        <span class="photo-tag tag-sun">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          Luz solar
+        </span>
         <span class="photo-tag tag-co2">CO₂</span>
         <span class="photo-tag tag-o2">O₂</span>
-        <span class="photo-tag tag-h2o">💧 H₂O</span>
+        <span class="photo-tag tag-h2o">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+          H₂O
+        </span>
       </div>
     </div>
     <div class="photo-text">
@@ -88,12 +94,15 @@
 
   .photo-tag {
     position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
     font-size: .72rem;
     color: var(--c-light);
     background: rgba(13,43,26,.85);
     border: 1px solid rgba(126,200,160,.28);
     border-radius: 20px;
-    padding: .28rem .75rem;
+    padding: .3rem .75rem;
     white-space: nowrap;
     animation: tag-float 3.2s ease-in-out infinite alternate;
   }

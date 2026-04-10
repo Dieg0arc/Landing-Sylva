@@ -1,5 +1,16 @@
 ---
 import { ecosystems } from '../data/content';
+
+const ecoIcons = [
+  // Selva Tropical — palm tree
+  `<svg class="eco-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 22V11"/><path d="M13 11C11 7 6 6 3 8c1 5 5 7 10 3z"/><path d="M13 11c2-4 7-5 10-3-1 5-5 7-10 3z"/><path d="M13 15c-2-3-6-4-9-3 1 4 5 6 9 3z"/><path d="M10 22h6"/></svg>`,
+  // Sabana — wheat
+  `<svg class="eco-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/></svg>`,
+  // Desierto — cactus
+  `<svg class="eco-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V10"/><path d="M12 13H8V9"/><path d="M12 16h4v-5"/></svg>`,
+  // Bosque Boreal — pine tree (Lucide TreePine)
+  `<svg class="eco-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3A1 1 0 0 1 15.2 9H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M9 21v-4c0-1.1.9-2 2-2h2a2 2 0 0 1 2 2v4"/></svg>`,
+];
 ---
 <section id="ecosystems" class="section-ecosystems">
   <div class="section-inner">
@@ -13,7 +24,9 @@ import { ecosystems } from '../data/content';
       {ecosystems.map((e, i) => (
         <div class="eco-card reveal" style={`--delay:${i * 0.1}s`}>
           <div class="eco-header">
-            <span class="eco-icon" aria-hidden="true">{e.icon}</span>
+            <span class="eco-icon">
+              <Fragment set:html={ecoIcons[i]} />
+            </span>
             <div class="eco-stat-block">
               <span class="eco-stat">{e.stat}</span>
               <span class="eco-stat-label">{e.statLabel}</span>
@@ -71,9 +84,21 @@ import { ecosystems } from '../data/content';
   }
 
   .eco-icon {
-    font-size: 2.4rem;
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: rgba(126, 200, 160, 0.1);
+    border: var(--border-subtle);
+    color: var(--c-light);
     flex-shrink: 0;
+  }
+  .eco-svg-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
   }
 
   .eco-stat-block {

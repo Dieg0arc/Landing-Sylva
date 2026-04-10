@@ -158,18 +158,20 @@ import { endangeredStats } from '../data/content';
     align-items: center;
     gap: .5rem;
     padding: .85rem 1.8rem;
+    min-height: 44px;
     border: var(--border-medium);
     border-radius: var(--radius-pill);
     color: var(--c-light);
     text-decoration: none;
     font-size: var(--text-sm);
     letter-spacing: .05em;
-    transition: background var(--transition-base), color var(--transition-base);
+    cursor: pointer;
+    transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
     width: fit-content;
     margin-top: 1.5rem;
   }
-  .cons-cta svg { width: 16px; height: 16px; transition: transform var(--transition-base); }
-  .cons-cta:hover { background: var(--c-light); color: var(--c-deep); }
+  .cons-cta svg { width: 16px; height: 16px; transition: transform var(--transition-base); flex-shrink: 0; }
+  .cons-cta:hover { background: var(--c-light); color: var(--c-deep); border-color: var(--c-light); }
   .cons-cta:hover svg { transform: translateX(4px); }
 </style>
 
